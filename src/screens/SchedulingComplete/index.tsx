@@ -15,10 +15,17 @@ import {
   Message,
   Footer
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export function SchedulingComplete(){
     //usando dentro do component react
     const { width } = useWindowDimensions();
+    const navigation = useNavigation();
+
+    //Funcao para navegar para tela
+    function handleConfirmaRental(){
+     navigation.navigate('Home');
+   }
 
   return (
     <Container>
@@ -41,7 +48,7 @@ export function SchedulingComplete(){
         </Content>
 
         <Footer>
-            <ConfirmButton title="OK" />
+            <ConfirmButton title="OK" onPress={handleConfirmaRental} />
         </Footer>
     </Container>
   );

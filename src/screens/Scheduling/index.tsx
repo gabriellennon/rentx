@@ -19,9 +19,16 @@ import {
   Content,
   Footer,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export function Scheduling(){
     const theme = useTheme();
+    const navigation = useNavigation();
+
+    //Funcao para navegar para tela
+    function handleConfirmaRental(){
+     navigation.navigate('SchedulingDetails');
+   }
 
   return (
     <Container>
@@ -63,7 +70,7 @@ export function Scheduling(){
         <Footer>
             <Button 
                 title="Confirmar"
-                onPress={() => {}}
+                onPress={handleConfirmaRental}
             />
         </Footer>
     </Container>
