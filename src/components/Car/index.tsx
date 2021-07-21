@@ -15,7 +15,7 @@ import {
   Type,
   CarImage,
 } from './styles';
-
+import { CarDTO } from '../../dtos/CarDTO';
 interface CardData {
     brand: string;
     name: string;
@@ -28,7 +28,8 @@ interface CardData {
 
 
 interface Props extends RectButtonProps {
-    data: CardData
+    // data: CardData
+    data: CarDTO
 }
 
 export function Car({ data, ...rest }: Props){
