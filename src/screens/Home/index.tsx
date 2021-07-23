@@ -25,20 +25,11 @@ export function Home(){
   //estado de loading
   const [loading, setLoading] = useState(true);
 
-  const carData = {
-    brand: 'audi',
-    name: '5 Coupé',
-    rent: {
-        period: 'ao dia',
-        price: 120
-    },
-    thumbnail: 'https://freepngimg.com/thumb/audi/35227-5-audi-rs5-red.png'
-  }
-
 
   //Funcao para navegar para tela
-  function handleCarDetails(){
-    navigation.navigate('CarDetails')
+  function handleCarDetails(car: CarDTO){
+    //passando para a nossa rota as informacoes, para recuperar em outra tela
+    navigation.navigate('CarDetails', { car })
   }
 
   //useEffect é um hoock que é disparado assim que nossa interface é aberta
@@ -84,10 +75,8 @@ export function Home(){
           <CarList
             data={cars}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => <Car data={item} onPress={handleCarDetails} />}
-          >
-            <Car data={carData}/>
-          </CarList>
+            renderItem={({ item }) => <Car data={item} onPress={() => handleCarDetails(item)} />}
+          />
         }
     </Container>
   );
