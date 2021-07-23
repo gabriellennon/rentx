@@ -5,12 +5,7 @@ import { ImageSlider } from '../../components/ImageSlider';
 import { Acessory } from '../../components/Acessory';
 import { Button } from '../../components/Button';
 
-import SpeedSvg from '../../assets/speed.svg';
-import AccelerationSvg from '../../assets/acceleration.svg';
-import ForceSvg from '../../assets/force.svg';
-import GasolineSvg from '../../assets/gasoline.svg';
-import ExchangeSvg from '../../assets/exchange.svg';
-import PeopleSvg from '../../assets/people.svg';
+import { getAccessiryIcon } from '../../utils/getAccessiryIcon';
 
 import {
   Container,
@@ -76,8 +71,10 @@ export function CarDetails(){
               car.accessories.map(accessory => (
                 <Acessory 
                   key={accessory.type}
-                  name={accessory.name} 
-                  icon={SpeedSvg} 
+                  name={accessory.name}
+                  //eu nao uso arrow fuction aqui pra ele ja chamar a funcao sem precisar de click
+                  //se fosse botao eu colocaria, pois ele só executará quando for clicado 
+                  icon={getAccessiryIcon(accessory.type)} 
                 />
 
               ))
