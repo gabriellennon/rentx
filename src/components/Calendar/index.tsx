@@ -1,20 +1,39 @@
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
-import {Calendar as CustomCalendar, LocaleConfig} from 'react-native-calendars';
+import { generateInterval } from './generateInterval';
+import { ptBR } from './localeConfig';
+import {Calendar as CustomCalendar, LocaleConfig, DateCallbackHandler} from 'react-native-calendars';
 //pois nao vem a tipagem junta, entao temos que instalar como desenvolvimento
 // yarn add @types/react-native-calendars -D
 
 import { useTheme } from 'styled-components';
-LocaleConfig.locales['pt-br'] = {
-    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-    monthNamesShort: ['Jan','Feve','Mar','Abr','Ma','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-    dayNamesShort: ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'],
-    today: 'Hoje'
-}
+LocaleConfig.locales['pt-br'] = ptBR;
 LocaleConfig.defaultLocale = 'pt-br';
 
-export function Calendar(){
+interface MarketDateProps {
+    [date: string]: {
+        color: string;
+        textColor: string;
+        disabled?: boolean;
+        //Para quando o usuario clicar em uma data aparecer nada ou aparecer alguma mensagem
+        disabledTouchEvent?: boolean;
+    }
+}
+
+interface CalendarProps {
+    markedDates: MarketDateProps;
+    onDayPress: DateCallbackHandler;
+}
+
+interface DayProps {
+    dateString: string;
+    day: number;
+    month: number;
+    year: number;
+    timestamp: number;
+}
+
+function Calendar({ markedDates, onDayPress }: CalendarProps){
     const theme = useTheme();
 
   return (
@@ -48,6 +67,20 @@ export function Calendar(){
 
         firstDay={1}
         minDate={new Date()}
+        markingType="period"
+        //quais datas estao selecionadas no periodo
+        markedDates={markedDates}
+        onDayPress={onDayPress}
     />
   );
+}
+
+export {
+    //calendario como todo
+    Calendar,
+    //periodo todo selecionado
+    MarketDateProps,
+    //dia selecionado
+    DayProps,
+    generateInterval
 }
