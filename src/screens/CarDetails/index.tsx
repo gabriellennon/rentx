@@ -37,7 +37,7 @@ export function CarDetails(){
 
    //Funcao para navegar para tela
    function handleConfirmaRental(){
-    navigation.navigate('Scheduling');
+    navigation.navigate('Scheduling', { car });
   }
 
   function handleBack(){
