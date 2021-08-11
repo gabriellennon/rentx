@@ -7,19 +7,24 @@ import {
   Header,
   TotalCars,
   HeaderContent,
-  CarList
+  CarList,
+  MyCarsButton
 } from './styles';
 
 import Logo from '../../assets/logo.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Car } from '../../components/Car';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components';
 import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
 import { Load } from '../../components/Load';
+import { Ionicons } from '@expo/vector-icons';
 
 export function Home(){
   const navigation = useNavigation();
+  const theme = useTheme();
+
   //estado para armazenar a resposta da nossa API
   const [cars, setCars] = useState<CarDTO[]>([]);
   //estado de loading
@@ -30,6 +35,11 @@ export function Home(){
   function handleCarDetails(car: CarDTO){
     //passando para a nossa rota as informacoes, para recuperar em outra tela
     navigation.navigate('CarDetails', { car })
+  }
+
+  function handleOpenMyCars(){
+    
+    navigation.navigate('MyCars')
   }
 
   //useEffect é um hoock que é disparado assim que nossa interface é aberta
@@ -78,6 +88,14 @@ export function Home(){
             renderItem={({ item }) => <Car data={item} onPress={() => handleCarDetails(item)} />}
           />
         }
+
+        <MyCarsButton onPress={handleOpenMyCars} >
+          <Ionicons 
+            name="ios-car-sport" 
+            size={32} 
+            color={theme.colors.shape}
+          />
+        </MyCarsButton>
     </Container>
   );
 }
