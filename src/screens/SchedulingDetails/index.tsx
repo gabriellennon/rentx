@@ -64,19 +64,25 @@ export function SchedulingDetails(){
 
   //Funcao para navegar para tela
   async function handleConfirmaRental(){
-    const schedulesByCar = await api.get(`/schedules/${car.id}`);
+    const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
 
     const unavailable_dates = [
       ...schedulesByCar.data.unavailable_dates,
       ...dates
     ];
 
-    api.put(`/schedules/${car.id}`, {
+    await api.post('schedules_byuser', {
+      user_id: 1,
+      car
+    })
+
+    //Atualizando as datas
+    api.put(`/schedules_bycars/${car.id}`, {
       id: car.id,
       unavailable_dates
     })
     //se der tudo certo
-    .then(response => navigation.navigate('SchedulingComplete'))
+    .then(() => navigation.navigate('SchedulingComplete'))
     .catch(() => Alert.alert('Não foi possível confirmar o agendamento'))
  }
 
