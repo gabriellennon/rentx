@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from 'styled-components'; 
+import { ActivityIndicator } from 'react-native';
 
 import {
   Container,
@@ -11,12 +12,14 @@ interface Props {
     color?: string;
     onPress: () => void;
     enabled?: boolean;
+    loading?: boolean;
 }
 
 export function Button({ 
   title, 
   color, 
-  enabled = true, 
+  enabled = true,
+  loading = false, 
   ...rest 
 }: Props){
   const theme = useTheme();
@@ -27,9 +30,13 @@ export function Button({
       color={color ? color : theme.colors.main}
       //desabilitando o click do botao quando eu quiser
       enabled={enabled}
-      style={{ opacity: enabled ? 1 : .5 }}
+      style={{ opacity: (enabled === false || loading === true) ? .5 : 1 }}
     >
-        <Title>{title}</Title>
+        {
+          loading 
+          ? <ActivityIndicator color={theme.colors.shape} />
+          : <Title>{title}</Title>
+        }
     </Container>
   );
 }
