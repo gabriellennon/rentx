@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from 'styled-components';
-import { StatusBar, Alert } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
@@ -46,14 +46,10 @@ export function Scheduling(){
 
     //Funcao para navegar para tela
     function handleConfirmaRental(){
-        if(!rentalPeriod.startFormatted || !rentalPeriod.endFormatted){
-            Alert.alert('Selecione o intervalo para alugar.')
-        }else{
-            navigation.navigate('SchedulingDetails', {
-                car,
-                dates: Object.keys(markedDates)
-            });
-        }
+        navigation.navigate('SchedulingDetails', {
+            car,
+            dates: Object.keys(markedDates)
+        });
 
    }
 
@@ -139,6 +135,7 @@ export function Scheduling(){
             <Button 
                 title="Confirmar"
                 onPress={handleConfirmaRental}
+                enabled={!!rentalPeriod.endFormatted}
             />
         </Footer>
     </Container>
