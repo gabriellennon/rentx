@@ -27,6 +27,7 @@ export const ImageIndex = styled.View<ImageIndexProps>`
 `;
 
 export const CarImageWrapper = styled.View`
+    /* Pegando 100% da tela */
     width: ${Dimensions.get('window').width}px;
     height: 132px;
 
