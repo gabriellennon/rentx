@@ -5,7 +5,8 @@ import Animated, {
   withTiming, 
   Easing, 
   interpolate, 
-  Extrapolate
+  Extrapolate,
+  runOnJS
 } from 'react-native-reanimated';
 
 import { Button, StyleSheet, Dimensions } from 'react-native';
@@ -18,9 +19,12 @@ const WIDTH = Dimensions.get('window').width
 import {
   Container
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export function Splash(){
   const splashAnimation = useSharedValue(0);
+  const navigation = useNavigation();
+
   const brandStyle = useAnimatedStyle(() => {
     return {
       opacity: interpolate(splashAnimation.value, 
@@ -53,11 +57,18 @@ export function Splash(){
     }
   });
 
+  function startApp(){
+    navigation.navigate('Home');
+  }
 
   useEffect(() =>{
     splashAnimation.value = withTiming( 
       50,
-      { duration: 2000 } 
+      { duration: 2000 },
+      () => {
+        'worklet'
+        runOnJS(startApp)();
+      }
     )
   },[]);
 
